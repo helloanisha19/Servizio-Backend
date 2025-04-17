@@ -4,7 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import swaggerUi from "swagger-ui-express";
 import openApiSpec from "./config/openapi.js";
-import { collectDefaultMetrics, register } from "prom-client";
+
 // import routes---------------------
 import admin from "./controllers/customer/customer.controllers.js";
 import refreshToken from "./controllers/common/refresh.token.controller.js";
@@ -15,16 +15,7 @@ import morgan from "morgan";
 
 // initialze app instance----------
 const app = express();
-// collect default metrics
-collectDefaultMetrics({
-  register: register,
-});
 
-app.get("/metrics", async (req, res) => {
-  const metrics = await register.metrics();
-  res.set("Content-Type", register.contentType);
-  res.send(metrics);
-});
 // middlewares---------------------
 app.use(morgan("tiny"));
 app.use(fileupload());
